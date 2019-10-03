@@ -1,3 +1,19 @@
+#  ai-platform/tasks/computer-vision/image-generation/MLproject
+
+#    parameters:
+#      iterations: {type: int, default: 14000}
+#      class_val: {type: int, default: 17}
+#      goodrun_ref: {type: int, default: 12900}
+#    command: "python Traffic_Signs_GAN_train.py {iterations} {class_val} {goodrun_ref}"
+#    command: "python Traffic_Signs_GAN_evaluate.py {class_val} {goodrun_ref}"
+#	Error: Got unexpected extra arguments (14000 17 12900)
+ 
+    
 name: image-generation
 
 conda_env: conda.yaml
+
+entry_points:
+  main:
+    command: "python Traffic_Signs_GAN_train.py"
+    command: "python Traffic_Signs_GAN_evaluate.py"

@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/63c67f49c573479f9fd35a20758e1741/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 63c67f49c573479f9fd35a20758e1741
+run_uuid: 63c67f49c573479f9fd35a20758e1741
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1569940497877
+status: 1
+tags: []
+user_id: raghu
