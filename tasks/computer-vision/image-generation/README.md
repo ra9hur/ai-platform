@@ -84,7 +84,7 @@ This project demonstrates generating new sample images for Class = 17 (“No Ent
 **5. Generative Model Architecture**
 -------------
 
-![5a](https://user-images.githubusercontent.com/17127066/66141992-515f7e00-e622-11e9-8c4a-d029ad6fb2bd.png)
+![GAN Architecture](https://www.kdnuggets.com/wp-content/uploads/generative-adversarial-network.png)
 
 
 To generate new images, Generative Adversarial Networks (GAN) model architecture has been adopted. This architecture involves two sub-models: 
@@ -123,7 +123,7 @@ Training Parameters
 
 Including below, a few images generated at the end of training.
 
-![6](https://user-images.githubusercontent.com/17127066/66142037-650ae480-e622-11e9-9e16-b2c9dfb86b83.png)
+![6GD](https://user-images.githubusercontent.com/17127066/66312456-5a0bc900-e92e-11e9-87dd-2593480961ed.png)
 
 
 ----------
@@ -136,7 +136,7 @@ color image.
  
 From the below images, we can see that trained Generator has done a good job of generating new images that are very close to real sample images.
 
-![7](https://user-images.githubusercontent.com/17127066/66142059-6c31f280-e622-11e9-8607-fb365185eec8.png)
+![7GD](https://user-images.githubusercontent.com/17127066/66312474-61cb6d80-e92e-11e9-9072-75911909a2e5.png)
 
 
 ----------
