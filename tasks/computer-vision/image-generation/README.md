@@ -28,7 +28,7 @@ Once downloaded, place train.p and test.p files (pickle format) in the “traffi
 
 Training
 
-1. Command-line parameters to run Traffic_Signs_GAN_train.py [iterations] [class_val] [goodrun_ref]
+1. Command-line parameters to run Traffic_Signs_GAN_train.py [ iterations ] [ class_val ] [ goodrun_ref ]
     - iterations: Number of iterations that the network should be trained for. Default = 14100
     - class_val: Should be between 1 to 43. Default = 17
     - goodrun_ref: There is also an option to restore weights from the previous good run. Weights should be availabe in the "weights/goodrun/" folder. Default = 12900
@@ -39,7 +39,7 @@ Training
 
 Evaluation
 
-1. Command-line parameters to run Traffic_Signs_GAN_evaluate.py [class_val] [goodrun_eval]
+1. Command-line parameters to run Traffic_Signs_GAN_evaluate.py [ class_val ] [ goodrun_eval ]
     - class_val: Should be between 1 to 43. Default = 17
     - goodrun_eval: Use weights from the previous good run and then, generate new images. Default = 13900
 
@@ -49,15 +49,15 @@ Evaluation
 
 A few mlflow commands to try out.
 
-mlflow run .
-mlflow run . -P iterations=13100
-mlflow run . -P iterations=13100 --no-conda
+    mlflow run .
+    mlflow run . -P iterations=13100
+    mlflow run . -P iterations=13100 --no-conda
 
-mlflow run . -e Traffic_Signs_GAN_train.py
-mlflow run . -e Traffic_Signs_GAN_train.py --no-conda
+    mlflow run . -e Traffic_Signs_GAN_train.py
+    mlflow run . -e Traffic_Signs_GAN_train.py --no-conda
 
-mlflow run . -e Traffic_Signs_GAN_evaluate.py
-mlflow run . -e Traffic_Signs_GAN_evaluate.py --no-conda
+    mlflow run . -e Traffic_Signs_GAN_evaluate.py
+    mlflow run . -e Traffic_Signs_GAN_evaluate.py --no-conda
 
 
 
