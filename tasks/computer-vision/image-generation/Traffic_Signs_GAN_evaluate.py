@@ -13,7 +13,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 #import matplotlib.image as mpimg
 
-#import os
+import os
+import sys
 
 # The following import and function call are the only additions to code required
 # to automatically log metrics and parameters to MLflow.
@@ -21,14 +22,14 @@ import mlflow.keras
 
 latent_dim = 100
 
-'''
-class_val = int(sys.argv[1])
-goodrun_ref = int(sys.argv[2])
-'''
 
+class_val = int(sys.argv[1]) if len(sys.argv) >= 2 else 17
+goodrun_ref = int(sys.argv[2]) if len(sys.argv) >= 2 else 13900
+
+'''
 class_val = 17
-goodrun_ref = 9900
-
+goodrun_ref = 13900
+'''
 
 # ----------------- Below functions to generate fake images
 # generate points in latent space as input for the generator
@@ -61,7 +62,7 @@ def generate_fake_samples(g_model, latent_dim, n_samples):
 if __name__ == "__main__":
     
 
-    mlflow.keras.autolog()
+#    mlflow.keras.autolog()
     
     mlflow.log_param('class_val', class_val)
     mlflow.log_param('goodrun_ref',goodrun_ref)
@@ -113,13 +114,13 @@ if __name__ == "__main__":
 
 
     # ----------------- Restore saved weights
-    g_file = base_dir + 'weights/generator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+    g_file = base_dir + 'weights/goodrun/generator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
     g_model.load_weights(g_file)
 
-    d_file = base_dir + 'weights/discriminator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+    d_file = base_dir + 'weights/goodrun/discriminator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
     d_model.load_weights(d_file)
 
-    gan_file = base_dir + 'weights/gan_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+    gan_file = base_dir + 'weights/goodrun/gan_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
     gan_model.load_weights(gan_file)
 
     

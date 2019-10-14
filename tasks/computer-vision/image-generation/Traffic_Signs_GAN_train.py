@@ -32,16 +32,17 @@ height = 32
 width = 32
 channels = 3
 
-'''
-iterations = int(sys.argv[1])
-class_val = int(sys.argv[2])
-goodrun_ref = int(sys.argv[3])
-'''
 
+iterations = int(sys.argv[1]) if len(sys.argv) >= 2 else 14100
+class_val = int(sys.argv[2]) if len(sys.argv) >= 3 else 17
+goodrun_ref = int(sys.argv[3]) if len(sys.argv) >= 4 else 12900
+
+
+'''
 iterations = 14000
 class_val = 17
 goodrun_ref = 12900
-
+'''
 
 # ----------------- Define GAN Generator Network
 def define_generator(latent_dim):
@@ -292,7 +293,7 @@ def load_train_images(image_dir, im_type):
 if __name__ == "__main__":
     
 
-    mlflow.keras.autolog()
+#    mlflow.keras.autolog()
 
     mlflow.log_param('iterations', iterations)
     mlflow.log_param('class_val', class_val)
@@ -365,15 +366,17 @@ if __name__ == "__main__":
 
     # ----------------- Restore weights from previous good runs
     # Restore saved weights
-    if goodrun_ref is not None:
+    #if (goodrun_ref is not None) and (goodrun_ref != 0):
+    if (goodrun_ref is not None):
 
-        g_file = base_dir + 'weights/generator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+        g_file = base_dir + 'weights/goodrun/generator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+        print("g_file path: ", g_file)
         g_model.load_weights(g_file)
     
-        d_file = base_dir + 'weights/discriminator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+        d_file = base_dir + 'weights/goodrun/discriminator_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
         d_model.load_weights(d_file)
     
-        gan_file = base_dir + 'weights/gan_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
+        gan_file = base_dir + 'weights/goodrun/gan_0' + str(class_val) + '_' + str(goodrun_ref) + '.h5'
         gan_model.load_weights(gan_file)
 
     else:
@@ -430,5 +433,38 @@ if __name__ == "__main__":
     train_file = base_dir + 'images/train/' + str(class_val) + '_' + str(iterations) + '.png'
     plt.savefig(train_file)
     
-    mlflow.log_param('Evaluate Generated Images', plt.show())
+    mlflow.log_param('Evaluate Train Images', plt.show())
 
+
+
+# Functionality to view real and generated images
+# These images were saved in the native system folders during network training
+def visualizeTrainingImages(base_dir):
+    
+    # Load generated images from the local system directory
+    # These images were generated while training the network
+    image_dir = base_dir + 'images/train/'
+    real_all = load_train_images(image_dir, "real")
+    generated_all = load_train_images(image_dir, "generated")
+    print ("# of real images available for visualization: ", len(real_all))
+
+    # Plot the original image and the three channels
+    f, ax = plt.subplots(10, 2, figsize=(10,40))
+    
+    ax[0,0].set_title('Real Samples', fontdict={'fontsize': 18, 'fontweight': 'medium'})
+    ax[0,1].set_title('Generated Samples', fontdict={'fontsize': 18, 'fontweight': 'medium'})
+    
+    for i in range (10):
+    
+        ax[i,0].imshow(real_all[i])
+    
+        ax[i,1].imshow(generated_all[i])
+
+    plt.tight_layout()
+    train_file = base_dir + 'images/train/' + str(class_val) + '_' + str(iterations) + '.png'
+    plt.savefig(train_file)
+    
+
+        
+        
+        

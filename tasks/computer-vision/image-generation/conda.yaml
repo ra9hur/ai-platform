@@ -1,13 +1,12 @@
 name: image-generation
 channels:
-  	- defaults
+    - defaults
 dependencies:
-	- tensorflow==1.11.1
-	- opencv_python==4.1.1.26
-	- numpy==1.16.4
-	- Keras==2.2.4
-	- pickle==4.0
-	- pip:
-		- mlflow==1.0.0
-	- matplotlib==3.1.1
-	- Pillow==6.1.0
+    - tensorflow-gpu==1.11.0
+    - numpy==1.16.4
+    - Keras==2.2.4
+    - pip:
+        - opencv_python==4.1.0.25
+        - mlflow==1.0.0
+    - matplotlib==3.1.1
+    - Pillow==6.1.0
