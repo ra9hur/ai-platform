@@ -140,27 +140,62 @@ def define_gan(generator, discriminator):
 
 
 
+
+# ----------------- Download German Traffic-Sign Dataset
+def download(base_dir):
+    
+    import urllib.request
+    import zipfile
+    
+    print("Downloading data")
+
+    url = 'https://d17h27t6h515a5.cloudfront.net/topher/2017/February/5898cd6f_traffic-signs-data/traffic-signs-data.zip'
+    
+    urllib.request.urlretrieve(url, './traffic-signs-data.zip')
+    
+    zip_ref = zipfile.ZipFile('./traffic-signs-data.zip', 'r')
+    zip_ref.extractall(base_dir + 'traffic-signs-data/')
+    zip_ref.close()
+
+    print("Files downloaded")
+
+
+
+
 # ----------------- Load pickled data
 # load and prepare traffic-sign training images
 def load_preprocess_real_data(base_dir, class_val):
 
-    # Load pickled data
+    import pathlib
     
+    # Load pickled data
     training_file = base_dir + 'traffic-signs-data/train.p'
+    validate_file = base_dir + 'traffic-signs-data/valid.p'
     testing_file = base_dir + 'traffic-signs-data/test.p'
+
+    # Download data and then, place them in traffic-signs-data folder
+    file = pathlib.Path(training_file)
+    if(file.exists ()):
+        print('Dataset already exists in traffic-signs-data folder')
+    else:
+        download(base_dir)
     
     with open(training_file, mode='rb') as f:
         train = pickle.load(f)
+    with open(validate_file, mode='rb') as f:
+        valid = pickle.load(f)
     with open(testing_file, mode='rb') as f:
         test = pickle.load(f)
     
     x_train, y_train = train['features'], train['labels']
+    x_valid, y_valid = valid['features'], valid['labels']
     x_test, y_test = test['features'], test['labels']
   
     x_train = x_train[y_train.flatten() == class_val]
+    x_valid = x_valid[y_valid.flatten() == class_val]
     x_test = x_test[y_test.flatten() == class_val]
   
-    x_train = np.concatenate([x_train, x_test])
+    x_train = np.concatenate([x_train, x_valid, x_test])
   
     x_train = x_train.reshape((x_train.shape[0],)+(height, width, channels))
     
@@ -390,7 +425,13 @@ if __name__ == "__main__":
         print("Iterations: ", iterations)
         print("Class_val: ", class_val)
         print("Good run reference: ", goodrun_ref)
-        input("Press Enter to continue, Cntrl C to exit ...")
+        
+        try:
+        	input("Press Enter to continue, Cntrl C to exit ...")
+        except KeyboardInterrupt:
+            print("\nTraining stopped manually")
+            sys.exit()
+        
         train(g_model, d_model, gan_model, dataset, latent_dim, base_dir, class_val, goodrun_ref, iterations)
         #print("within training loop")
     else:
